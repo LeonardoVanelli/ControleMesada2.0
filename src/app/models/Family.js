@@ -1,13 +1,10 @@
 import Sequelize, { Model } from 'sequelize';
 
-class User extends Model {
+class Family extends Model {
   static init(sequelize) {
     super.init(
       {
         name: Sequelize.STRING,
-        email: Sequelize.STRING,
-        password: Sequelize.STRING,
-        provider: Sequelize.BOOLEAN,
       },
       {
         sequelize,
@@ -18,12 +15,17 @@ class User extends Model {
   }
 
   static associate(models) {
-    this.belongsToMany(models.Family, {
+    this.belongsToMany(models.User, {
+      foreignKey: 'user_id',
+      as: 'users',
       through: 'familyUsers',
-      as: 'families',
-      foreignKey: 'family_id',
+    });
+    this.belongsToMany(models.Assignment, {
+      foreignKey: 'assignment_id',
+      as: 'assignments',
+      through: 'familyAssignments',
     });
   }
 }
 
-export default User;
+export default Family;

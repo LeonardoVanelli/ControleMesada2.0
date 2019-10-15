@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('users', {
+    const Families = queryInterface.createTable('families', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -11,20 +11,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      password: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      provider: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
-      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,
@@ -34,9 +20,19 @@ module.exports = {
         allowNull: false,
       },
     });
+
+    Families.associate = models => {
+      Families.belongsToMany(models.Users, {
+        through: 'familyUsers',
+        as: 'users',
+        foreignKey: 'user_id',
+      });
+    };
+
+    return Families;
   },
 
   down: queryInterface => {
-    return queryInterface.dropTable('users');
+    return queryInterface.dropTable('families');
   },
 };
