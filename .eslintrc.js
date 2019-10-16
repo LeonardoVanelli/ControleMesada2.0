@@ -16,5 +16,7 @@ module.exports = {
   plugins: ['prettier'],
   rules: {
     'import/prefer-default-export': 'off',
+    'class-methods-use-this': 'off',
+    'no-param-reassign': 'off',
   },
 };

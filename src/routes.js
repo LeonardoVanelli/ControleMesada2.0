@@ -1,17 +1,11 @@
 import { Router } from 'express';
 
-import User from './app/models/User';
+import UserController from './app/controllers/UserController';
+
+import ValidateUserStore from './app/Validators/UserStore';
 
 const router = Router();
 
-router.post('/user', async (req, res) => {
-  const { name, email } = req.body;
-
-  const user = await User.create({
-    name,
-    email,
-  });
-  return res.json(user);
-});
+router.post('/user', ValidateUserStore, UserController.store);
 
 export default router;
