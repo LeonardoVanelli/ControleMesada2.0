@@ -31,6 +31,10 @@ class User extends Model {
       foreignKey: 'family_id',
     });
   }
+
+  checkPassword(password) {
+    return bcrypt.compare(password, this.password_hash);
+  }
 }
 
 export default User;
