@@ -6,9 +6,11 @@ import providerMiddleware from './app/middleware/provider';
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 import AssignmentController from './app/controllers/AssignmentController';
+import ActivityController from './app/controllers/ActivityController';
 
 import ValidateUserStore from './app/Validators/UserStore';
 import ValidateAssignmentStore from './app/Validators/AssignmentStore';
+import ActivityStore from './app/Validators/ActivityStore';
 
 const router = Router();
 
@@ -23,5 +25,7 @@ router.post(
   ValidateAssignmentStore,
   AssignmentController.store
 );
+
+router.post('/activity', ActivityStore, ActivityController.store);
 
 export default router;
