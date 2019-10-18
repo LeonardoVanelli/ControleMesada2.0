@@ -9,6 +9,8 @@ import {
 
 import Activity from '../models/Activity';
 
+import ActivityIndexService from '../services/ActivityIndexService';
+
 class ActivityController {
   async store(req, res) {
     // eslint-disable-next-line camelcase
@@ -40,6 +42,18 @@ class ActivityController {
     });
 
     return res.json({ id, realizedDate });
+  }
+
+  async index(req, res) {
+    const { date } = req.query;
+    const { userId } = req.params;
+
+    const activities = await ActivityIndexService.run({
+      date,
+      userId,
+    });
+
+    return res.json(activities);
   }
 }
 

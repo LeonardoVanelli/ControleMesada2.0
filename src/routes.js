@@ -27,5 +27,6 @@ router.post(
 );
 
 router.post('/activity', ActivityStore, ActivityController.store);
+router.get('/activity/:userId', ActivityController.index);
 
 export default router;
