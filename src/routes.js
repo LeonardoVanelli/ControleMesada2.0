@@ -8,11 +8,13 @@ import SessionController from './app/controllers/SessionController';
 import AssignmentController from './app/controllers/AssignmentController';
 import ActivityController from './app/controllers/ActivityController';
 import ClosureController from './app/controllers/ClosureController';
+import CardController from './app/controllers/CardController';
 
 import ValidateUserStore from './app/Validators/UserStore';
 import ValidateAssignmentStore from './app/Validators/AssignmentStore';
 import ValidateActivityStore from './app/Validators/ActivityStore';
 import ValidateClosureIndex from './app/Validators/ClosureIndex';
+import ValidateCardIndex from './app/Validators/CardIndex';
 
 const router = Router();
 
@@ -34,5 +36,7 @@ router.get('/activity/:userId', ActivityController.index);
 router.get('/user/:id', UserController.index);
 
 router.get('/closure/:userId', ValidateClosureIndex, ClosureController.index);
+
+router.get('/card/:userId', ValidateCardIndex, CardController.index);
 
 export default router;

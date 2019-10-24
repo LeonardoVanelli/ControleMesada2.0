@@ -16,14 +16,14 @@ class Family extends Model {
 
   static associate(models) {
     this.belongsToMany(models.User, {
-      foreignKey: 'user_id',
-      as: 'users',
       through: 'familyUsers',
+      as: 'users',
+      foreignKey: 'family_id',
     });
     this.belongsToMany(models.Assignment, {
-      foreignKey: 'assignment_id',
-      as: 'assignments',
       through: 'familyAssignments',
+      as: 'assignments',
+      foreignKey: 'family_id',
     });
   }
 }
