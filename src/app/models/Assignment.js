@@ -18,7 +18,7 @@ class Assignment extends Model {
 
   static associate(models) {
     this.belongsToMany(models.Family, {
-      through: 'familyAssignments',
+      through: 'family_assignments',
       as: 'families',
       foreignKey: 'assignment_id',
     });

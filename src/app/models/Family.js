@@ -16,12 +16,12 @@ class Family extends Model {
 
   static associate(models) {
     this.belongsToMany(models.User, {
-      through: 'familyUsers',
+      through: 'family_users',
       as: 'users',
       foreignKey: 'family_id',
     });
     this.belongsToMany(models.Assignment, {
-      through: 'familyAssignments',
+      through: 'family_assignments',
       as: 'assignments',
       foreignKey: 'family_id',
     });

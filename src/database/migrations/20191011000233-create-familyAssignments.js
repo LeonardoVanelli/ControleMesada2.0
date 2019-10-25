@@ -1,8 +1,9 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    const Families = queryInterface.createTable('familyAssignments', {
+    const Families = queryInterface.createTable('family_assignments', {
       family_id: {
         type: Sequelize.INTEGER,
+        primaryKey: true,
         references: {
           model: 'families',
           key: 'id',
@@ -12,6 +13,7 @@ module.exports = {
       },
       assignment_id: {
         type: Sequelize.INTEGER,
+        primaryKey: true,
         references: {
           model: 'assignments',
           key: 'id',
