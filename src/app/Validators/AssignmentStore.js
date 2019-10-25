@@ -7,7 +7,9 @@ export default async (req, res, next) => {
       value: Yup.number()
         .required()
         .min(0.1),
-      disabled: Yup.boolean(),
+      familyId: Yup.number()
+        .required()
+        .min(1),
     });
 
     await schema.validate(req.body, { abortEarly: false });
