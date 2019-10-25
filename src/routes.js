@@ -17,6 +17,7 @@ import ValidateActivityStore from './app/Validators/ActivityStore';
 import ValidateClosureIndex from './app/Validators/ClosureIndex';
 import ValidateCardIndex from './app/Validators/CardIndex';
 import ValidateFamilyStore from './app/Validators/FamilyStore';
+import ValidateAssignmentShow from './app/Validators/AssignmentShow';
 
 const router = Router();
 
@@ -31,6 +32,7 @@ router.post(
   ValidateAssignmentStore,
   AssignmentController.store
 );
+router.get('/assignment', ValidateAssignmentShow, AssignmentController.show);
 
 router.post('/activity', ValidateActivityStore, ActivityController.store);
 router.get('/activity/:userId', ActivityController.index);
