@@ -1,13 +1,28 @@
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-restricted-syntax */
 import { startOfWeek, endOfWeek, eachDayOfInterval, parseISO } from 'date-fns';
 
 import Activity from '../models/Activity';
 import Assignment from '../models/Assignment';
 import User from '../models/User';
+import Family from '../models/Family';
 
 class ClosureController {
   async index(req, res) {
     const { userId } = req.params;
+    const { familyId } = req.query;
     const date = parseISO(req.query.date);
+
+    const user = await User.findOne({
+      where: { id: userId, provider: false },
+      attributes: ['id', 'name', 'email'],
+    });
+
+    if (!user) {
+      return res
+        .status(400)
+        .json({ error: 'User does not exist or is provider' });
+    }
 
     const datesOfWeek = eachDayOfInterval(
       {
@@ -20,7 +35,7 @@ class ClosureController {
     const activitiesByDate = [];
     let amountOfWeek = 0;
 
-    datesOfWeek.map(async dateOfWeek => {
+    for (const dateOfWeek of datesOfWeek) {
       const activities = await Activity.findAll({
         where: {
           user_id: userId,
@@ -32,6 +47,16 @@ class ClosureController {
             model: Assignment,
             as: 'assignment',
             attributes: ['id', 'name', 'value'],
+            required: true,
+            include: [
+              {
+                model: Family,
+                as: 'families',
+                required: true,
+                where: { id: familyId },
+                attributes: [],
+              },
+            ],
           },
         ],
       });
@@ -43,11 +68,7 @@ class ClosureController {
 
       const activitiesOfDay = { date: dateOfWeek, activities };
       activitiesByDate.push(activitiesOfDay);
-    });
-
-    const user = await User.findByPk(userId, {
-      attributes: ['id', 'name', 'email'],
-    });
+    }
 
     return res.json({ user, activitiesByDate, amountOfWeek });
   }
