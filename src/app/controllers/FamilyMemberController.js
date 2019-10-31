@@ -18,7 +18,6 @@ class FamilyMember {
       return res.status(400).json({ error: 'Invitation has expired' });
     }
 
-    console.log(invite.familyId);
     const family = await Family.findByPk(invite.familyId);
     if (!family) {
       return res.status(400).json({ error: 'Invitation has expired' });
