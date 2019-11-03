@@ -1,3 +1,3 @@
 export default {
-  key: 'mySecretKey',
+  key: process.env.CRYPT_KEY,
 };

@@ -2,17 +2,23 @@ import Invite from '../../lib/Invite';
 import FamilyUsers from '../models/FamilyUsers';
 import User from '../models/User';
 import Family from '../models/Family';
+import Queue from '../../lib/Queue';
+import InvitationMail from '../jobs/InvitationMail';
 
 class InviteController {
   async store(req, res) {
     const { familyId, userId } = req.body;
 
-    const user = await User.findByPk(userId);
+    const user = await User.findByPk(userId, {
+      attributes: ['id', 'name', 'email'],
+    });
     if (!user) {
       return res.status(400).json({ error: 'User does not exist' });
     }
 
-    const family = await Family.findByPk(familyId);
+    const family = await Family.findByPk(familyId, {
+      attributes: ['id', 'name'],
+    });
     if (!family) {
       return res.status(400).json({ error: 'Family does not exist' });
     }
@@ -26,8 +32,20 @@ class InviteController {
 
     const key = await Invite.create({ familyId, userId });
 
-    return res.json({
+    const provider = await User.findByPk(req.userId, {
+      attributes: ['name'],
+    });
+
+    await Queue.add(InvitationMail.key, {
+      family,
+      user,
       url: `controlemesada://controlemesada/invite/${key}`,
+      provider,
+    });
+
+    return res.json({
+      user,
+      family,
     });
   }
 }
