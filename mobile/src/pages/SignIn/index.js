@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Background from '../../components/Background';
 import Input from '../../components/Input';
@@ -14,7 +15,7 @@ import {
   TextBold,
 } from './styles';
 
-export default function SignIn() {
+export default function SignIn({ navigation }) {
   return (
     <Background>
       <Container>
@@ -31,7 +32,7 @@ export default function SignIn() {
           </Text>
         </RememberPass>
 
-        <NewAccount>
+        <NewAccount onPress={() => navigation.navigate('SignUp')}>
           <Text>
             Não tem conta?
             <TextBold> Cadastre-se</TextBold>
@@ -41,3 +42,9 @@ export default function SignIn() {
     </Background>
   );
 }
+
+SignIn.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+};

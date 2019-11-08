@@ -7,12 +7,23 @@ import { Container, TInput } from './styles';
 export default function Input({ icon, ...rest }) {
   return (
     <Container>
-      <Icon name={icon} size={24} color="rgba(156, 195, 216, 0.54)" />
+      {icon !== '' && (
+        <Icon
+          name={icon}
+          size={24}
+          style={{ marginRight: 28 }}
+          color="rgba(156, 195, 216, 0.54)"
+        />
+      )}
       <TInput {...rest} />
     </Container>
   );
 }
 
 Input.propTypes = {
-  icon: PropTypes.string.isRequired,
+  icon: PropTypes.string,
+};
+
+Input.defaultProps = {
+  icon: '',
 };
