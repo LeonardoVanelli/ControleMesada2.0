@@ -1,15 +1,13 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
+import { useSelector } from 'react-redux';
 
 import './config/Reactotron';
 
-import Routes from './routes';
+import createRoutes from './routes';
 
-export default function src() {
-  return (
-    <>
-      <StatusBar backgroundColor="rgba(14, 40, 91, 1)" />
-      <Routes />
-    </>
-  );
+export default function App() {
+  const signed = useSelector(state => state.auth.signed);
+
+  const Routes = createRoutes(signed);
+  return <Routes />;
 }
