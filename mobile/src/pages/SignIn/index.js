@@ -53,7 +53,7 @@ export default function SignIn({ navigation }) {
             secureTextEntry
             autoCapitalize="none"
             returnKeyType="send"
-            onSubmitEditing={() => handleSubmit}
+            onSubmitEditing={handleSubmit}
             ref={passwordRef}
             value={password}
             onChangeText={setPassword}
