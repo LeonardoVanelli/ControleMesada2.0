@@ -26,7 +26,7 @@ class User extends Model {
 
   static associate(models) {
     this.belongsToMany(models.Family, {
-      through: 'familyUsers',
+      through: 'family_users',
       as: 'families',
       foreignKey: 'user_id',
     });
