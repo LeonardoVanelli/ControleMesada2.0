@@ -1,7 +1,7 @@
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 
-import Drawner from './components/Drawner';
+import Drawer from './components/Drawer';
 
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
@@ -18,7 +18,7 @@ export default (isSigned = false) =>
         App: createDrawerNavigator(
           { Home, SignIn },
           {
-            contentComponent: Drawner,
+            contentComponent: Drawer,
             drawerWidth: 276,
             contentOptions: {
               activeBackgroundColor: '#1D5E79',
