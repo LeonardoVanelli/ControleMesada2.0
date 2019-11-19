@@ -13,9 +13,9 @@ export function* signIn({ payload }) {
       password,
     });
 
-    const { user, token } = response.data;
+    const { user, families, token } = response.data;
 
-    yield put(signInSuccess(token, user));
+    yield put(signInSuccess(token, user, families));
   } catch (error) {
     yield put(signFailure());
     Alert.alert('Falha no login', 'Verifique os dados informados');
