@@ -17,6 +17,7 @@ import {
   NavButton,
   ButtonText,
   Top,
+  Families,
   Border,
 } from './styles';
 
@@ -40,8 +41,10 @@ export default props => {
             />
             <Title>Familias</Title>
           </Session>
-          <DrawerItems {...props} />
         </Top>
+        <Families>
+          <DrawerItems {...props} />
+        </Families>
         <Footer>
           <Border>
             <NavButton onPress={() => {}}>

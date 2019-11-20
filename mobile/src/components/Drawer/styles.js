@@ -15,6 +15,8 @@ export const Safe = styled.SafeAreaView`
 
 export const Top = styled.View``;
 
+export const Families = styled.ScrollView``;
+
 export const Header = styled.View`
   align-items: center;
   margin: 20px 0;
