@@ -1,14 +1,36 @@
-import React from 'react';
-import { Text } from 'react-native';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import Background from '../../components/Background';
+import Button from '../../components/Button';
+import Input from '../../components/Input';
 
-// import { Container } from './styles';
+import { createRequest } from '../../store/modules/families/actions';
+
+import { Container } from './styles';
 
 export default function Family() {
+  const dispatch = useDispatch();
+
+  const [name, setName] = useState('');
+
+  function handleSubmit() {
+    dispatch(createRequest(name));
+  }
+
   return (
     <Background>
-      <Text>Criar Familia</Text>
+      <Container>
+        <Input
+          placeholder="Nome"
+          autoCorrect={false}
+          returnKeyType="send"
+          onSubmitEditing={handleSubmit}
+          value={name}
+          onChangeText={setName}
+        />
+        <Button onPress={handleSubmit}>Criar</Button>
+      </Container>
     </Background>
   );
 }
