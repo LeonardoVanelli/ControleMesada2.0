@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+import HamburguerMenu from '../../components/Drawer/HamburguerMenu';
 import Background from '../../components/Background';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
@@ -17,7 +18,6 @@ export default function Family() {
   function handleSubmit() {
     dispatch(createRequest(name));
   }
-
   return (
     <Background>
       <Container>
@@ -34,3 +34,9 @@ export default function Family() {
     </Background>
   );
 }
+
+Family.navigationOptions = ({ navigation }) => {
+  return {
+    headerLeft: HamburguerMenu(navigation),
+  };
+};
