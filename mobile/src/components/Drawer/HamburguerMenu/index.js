@@ -6,6 +6,6 @@ import { Container } from './styles';
 
 export default navigation => (
   <Container onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
-    <Icon name="menu" size={24} color="#9CC3D8" />
+    <Icon name="menu" size={24} color="#46819D" />
   </Container>
 );

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import HamburguerMenu from '../../components/Drawer/HamburguerMenu';
-import Background from '../../components/Background';
-import Button from '../../components/Button';
-import Input from '../../components/Input';
+import HamburguerMenu from '../../../components/Drawer/HamburguerMenu';
+import Background from '../../../components/Background';
+import Button from '../../../components/Button';
+import Input from '../../../components/Input';
 
-import { createRequest } from '../../store/modules/families/actions';
+import { createRequest } from '../../../store/modules/families/actions';
 
 import { Container } from './styles';
 

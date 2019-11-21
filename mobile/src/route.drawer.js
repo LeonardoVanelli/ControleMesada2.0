@@ -3,8 +3,8 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 
 import Drawer from './components/Drawer';
 
-import Home from './pages/Home';
-import CreateFamily from './pages/Family/createFamily';
+import Family from './pages/Family/Home';
+import CreateFamily from './pages/Family/CreateFamily';
 
 function createStack(screen, title, params) {
   return createStackNavigator(
@@ -36,7 +36,7 @@ export default families => {
   const familiesComponents = {};
 
   families.forEach(family => {
-    familiesComponents[family.name] = createStack(Home, family.name, {
+    familiesComponents[family.name] = createStack(Family, family.name, {
       family,
     });
   });
