@@ -13,7 +13,6 @@ export function signInSuccess(token, user, families) {
 }
 
 export function signUpRequest(name, email, password) {
-  console.tron.log('rue');
   return {
     type: '@auth/SIGN_UP',
     payload: { name, email, password },

@@ -16,8 +16,11 @@ export default function auth(state = INITIAL_STATE, action) {
         break;
       }
       case '@family/CREATE_SUCCESS': {
-        console.tron.log(action.payload);
         draft.data.push(action.payload);
+        break;
+      }
+      case '@family/SET_FAMILIES_SUCCESS': {
+        draft.data = action.payload.families;
         break;
       }
       default:

@@ -6,7 +6,7 @@ export default reducers => {
     {
       key: 'controlemesada',
       storage: AsyncStorage,
-      whitelist: ['auth', 'user', 'families'],
+      whitelist: ['auth', 'user'],
     },
     reducers
   );

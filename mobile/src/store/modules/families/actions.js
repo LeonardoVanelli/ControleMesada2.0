@@ -11,3 +11,10 @@ export function createSuccess(id, name) {
     payload: { id, name },
   };
 }
+
+export function setFamiliesSuccess(families) {
+  return {
+    type: '@family/SET_FAMILIES_SUCCESS',
+    payload: { families },
+  };
+}
