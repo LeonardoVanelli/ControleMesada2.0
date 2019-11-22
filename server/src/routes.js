@@ -40,6 +40,7 @@ router.get('/user/:id', UserController.index);
 router.get('/closure/:userId', ValidateClosureIndex, ClosureController.index);
 
 router.post('/family', ValidateFamilyStore, FamilyController.store);
+router.get('/family/:userId', FamilyController.show);
 
 router.get('/card/:userId', ValidateCardIndex, CardController.index);
 

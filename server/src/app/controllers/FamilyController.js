@@ -37,6 +37,23 @@ class FamilyController {
 
     return res.json({ family });
   }
+
+  async show(req, res) {
+    const { userId } = req.params;
+
+    const families = await Family.findAll({
+      attributes: ['id', 'name'],
+      include: [
+        {
+          model: User,
+          as: 'users',
+          where: { id: userId },
+          attributes: [],
+        },
+      ],
+    });
+    res.json(families);
+  }
 }
 
 export default new FamilyController();
