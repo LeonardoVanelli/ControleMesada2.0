@@ -19,6 +19,7 @@ import ValidateActivityStore from './app/Validators/ActivityStore';
 import ValidateClosureIndex from './app/Validators/ClosureIndex';
 import ValidateCardIndex from './app/Validators/CardIndex';
 import ValidateFamilyStore from './app/Validators/FamilyStore';
+import ValidateFamilyShow from './app/Validators/FamilyShow';
 import ValidateAssignmentShow from './app/Validators/AssignmentShow';
 import ValidateInviteStore from './app/Validators/InviteStore';
 import ValidateFamilyMemberStore from './app/Validators/FamilyMemberStore';
@@ -40,7 +41,8 @@ router.get('/user/:id', UserController.index);
 router.get('/closure/:userId', ValidateClosureIndex, ClosureController.index);
 
 router.post('/family', ValidateFamilyStore, FamilyController.store);
-router.get('/family/:userId', FamilyController.show);
+router.get('/family/:id', FamilyController.index);
+router.get('/family', ValidateFamilyShow, FamilyController.show);
 
 router.get('/card/:userId', ValidateCardIndex, CardController.index);
 

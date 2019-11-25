@@ -39,7 +39,7 @@ class FamilyController {
   }
 
   async show(req, res) {
-    const { userId } = req.params;
+    const { userId } = req.query;
 
     const families = await Family.findAll({
       attributes: ['id', 'name'],
@@ -53,6 +53,30 @@ class FamilyController {
       ],
     });
     res.json(families);
+  }
+
+  async index(req, res) {
+    const { id } = req.params;
+
+    const family = await Family.findByPk(id, {
+      attributes: ['id', 'name'],
+      include: [
+        {
+          model: User,
+          as: 'users',
+          attributes: ['id', 'name', 'provider'],
+          through: { attributes: [] },
+        },
+      ],
+    });
+
+    if (!family) {
+      return res.status(400).json({
+        error: `No family found`,
+      });
+    }
+
+    return res.json(family);
   }
 }
 
