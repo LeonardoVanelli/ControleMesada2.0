@@ -5,6 +5,22 @@ import Drawer from './components/Drawer';
 
 import Family from './pages/Family/Home';
 import CreateFamily from './pages/Family/CreateFamily';
+import AboutFamily from './pages/Family/About';
+
+function getNavigationOptions(title) {
+  return {
+    title,
+    headerTitleStyle: {
+      color: '#46819D',
+      fontFamily: 'Roboto',
+    },
+    headerStyle: {
+      borderBottomColor: '#9CC3D8',
+      borderBottomWidth: 1,
+      backgroundColor: '#0E285B',
+    },
+  };
+}
 
 function createStack(screen, title, params) {
   return createStackNavigator(
@@ -12,17 +28,13 @@ function createStack(screen, title, params) {
       start: {
         screen,
         params: { ...params },
+        navigationOptions: getNavigationOptions(title),
+      },
+      about: {
+        screen: AboutFamily,
         navigationOptions: {
-          title,
-          headerTitleStyle: {
-            color: '#46819D',
-            fontFamily: 'Roboto',
-          },
-          headerStyle: {
-            borderBottomColor: '#9CC3D8',
-            borderBottomWidth: 1,
-            backgroundColor: '#0E285B',
-          },
+          ...getNavigationOptions(title),
+          headerTintColor: '#46819D',
         },
       },
     },

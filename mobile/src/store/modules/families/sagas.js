@@ -23,7 +23,11 @@ export function* createFamily({ payload }) {
 export function* setFamilies({ payload }) {
   try {
     const { id } = payload.user.profile;
-    const response = yield call(api.get, `family/${id}`);
+    const response = yield call(api.get, `family`, {
+      params: {
+        userId: id,
+      },
+    });
 
     const families = response.data;
 

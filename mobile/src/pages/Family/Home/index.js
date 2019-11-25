@@ -20,7 +20,9 @@ export default function Home({ navigation }) {
             <Card
               text="Sobre a família"
               iconName="people-outline"
-              onPress={() => {}}
+              onPress={() =>
+                navigation.navigate('about', { familyId: family.id })
+              }
             />
             <Card text="Tarefas" iconName="fitness-center" onPress={() => {}} />
             <Card
