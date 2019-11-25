@@ -24,7 +24,13 @@ export default function Home({ navigation }) {
                 navigation.navigate('about', { familyId: family.id })
               }
             />
-            <Card text="Tarefas" iconName="fitness-center" onPress={() => {}} />
+            <Card
+              text="Tarefas"
+              iconName="fitness-center"
+              onPress={() => {
+                navigation.navigate('assignment', { familyId: family.id });
+              }}
+            />
             <Card
               text="Atividades semana"
               iconName="description"
