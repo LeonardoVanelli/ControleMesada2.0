@@ -5,7 +5,7 @@ import Family from '../models/Family';
 
 class FamilyMember {
   async store(req, res) {
-    const { key } = req.body;
+    const { key, userId } = req.body;
 
     const invite = await Invite.verify(key);
 
@@ -13,7 +13,7 @@ class FamilyMember {
       return res.status(400).json({ error: 'Invitation has expired' });
     }
 
-    const user = await User.findByPk(invite.userId);
+    const user = await User.findByPk(userId);
     if (!user) {
       return res.status(400).json({ error: 'Invitation has expired' });
     }

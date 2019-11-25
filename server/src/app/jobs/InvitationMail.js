@@ -6,15 +6,14 @@ class InvitationMail {
   }
 
   async handle({ data }) {
-    const { user, family, provider, url } = data;
+    const { email, family, provider, url } = data;
 
     await Mail.sendMail({
-      to: `${user.name} <${user.email}>`,
-      subject: `Convite familia ${family.name}`,
+      to: `${email} <${email}>`,
+      subject: `Convite família ${family.name}`,
       template: 'invitation',
       context: {
         family: family.name,
-        user: user.name,
         provider: provider.name,
         url,
       },

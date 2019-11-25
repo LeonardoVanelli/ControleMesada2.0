@@ -6,9 +6,9 @@ export default async (req, res, next) => {
       familyId: Yup.number()
         .required()
         .min(1),
-      userId: Yup.number()
-        .required()
-        .min(1),
+      email: Yup.string()
+        .email()
+        .required(),
     });
 
     await schema.validate(req.body, { abortEarly: false });
