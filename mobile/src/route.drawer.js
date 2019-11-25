@@ -8,6 +8,7 @@ import CreateFamily from './pages/Family/CreateFamily';
 import AboutFamily from './pages/Family/About';
 import Invite from './pages/Family/About/Invite';
 import Assignment from './pages/Family/Assignment';
+import CreateAssignment from './pages/Family/Assignment/Create';
 
 function getNavigationOptions(title) {
   return {
@@ -48,6 +49,13 @@ function createStack(screen, title, params) {
       },
       assignment: {
         screen: Assignment,
+        navigationOptions: {
+          ...getNavigationOptions(title),
+          headerTintColor: '#46819D',
+        },
+      },
+      createAssignment: {
+        screen: CreateAssignment,
         navigationOptions: {
           ...getNavigationOptions(title),
           headerTintColor: '#46819D',

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import currencyFormatter from 'currency-formatter';
+import { useSelector } from 'react-redux';
 import { Alert } from 'react-native';
 
 import api from '../../../services/api';
@@ -17,10 +19,14 @@ import {
   DataItem,
   Line,
   Footer,
+  NotAssignments,
+  NotAssignmentsText,
 } from './styles';
 
 export default function Assignment({ navigation }) {
   const familyId = navigation.getParam('familyId');
+
+  const isProvider = useSelector(state => state.user.profile.provider);
 
   const [assignments, setAssignments] = useState([]);
 
@@ -33,16 +39,32 @@ export default function Assignment({ navigation }) {
           },
         });
 
-        setAssignments(response.data);
+        const assignmentsComplete = response.data.map(assignment => ({
+          ...assignment,
+          formattedValue: currencyFormatter.format(assignment.value, {
+            code: 'BRL',
+          }),
+        }));
+
+        setAssignments(assignmentsComplete);
       } catch (error) {
         Alert.alert('Opss!', error.response.data);
       }
     }
     handleStart();
-  }, [familyId]);
+
+    navigation.addListener('didFocus', () => {
+      handleStart();
+    });
+  }, [familyId, navigation]);
 
   return (
     <Background>
+      {assignments.length === 0 && (
+        <NotAssignments>
+          <NotAssignmentsText>Nenhuma atividade cadastrada</NotAssignmentsText>
+        </NotAssignments>
+      )}
       <Container>
         <Body>
           <Assignments>
@@ -53,7 +75,7 @@ export default function Assignment({ navigation }) {
                     {assignment.name}
                   </ItemName>
                   <Value disabled={assignment.disabled}>
-                    {assignment.value}
+                    {assignment.formattedValue}
                   </Value>
                 </DataItem>
                 <Line disabled={assignment.disabled} />
@@ -61,9 +83,17 @@ export default function Assignment({ navigation }) {
             ))}
           </Assignments>
         </Body>
-        <Footer>
-          <Button>Nova tarefa</Button>
-        </Footer>
+        {isProvider && (
+          <Footer>
+            <Button
+              onPress={() =>
+                navigation.navigate('createAssignment', { familyId })
+              }
+            >
+              Nova tarefa
+            </Button>
+          </Footer>
+        )}
       </Container>
     </Background>
   );

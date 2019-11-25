@@ -58,3 +58,14 @@ export const Line = styled.View`
 export const Footer = styled.View`
   padding: 0 18px;
 `;
+
+export const NotAssignments = styled.View`
+  flex: 1;
+  justify-content: flex-end;
+`;
+
+export const NotAssignmentsText = styled.Text`
+  color: rgba(255, 255, 255, 0.4);
+  text-align: center;
+  font-size: 20px;
+`;
