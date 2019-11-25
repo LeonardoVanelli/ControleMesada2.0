@@ -6,6 +6,7 @@ import Drawer from './components/Drawer';
 import Family from './pages/Family/Home';
 import CreateFamily from './pages/Family/CreateFamily';
 import AboutFamily from './pages/Family/About';
+import Invite from './pages/Family/About/Invite';
 
 function getNavigationOptions(title) {
   return {
@@ -32,6 +33,13 @@ function createStack(screen, title, params) {
       },
       about: {
         screen: AboutFamily,
+        navigationOptions: {
+          ...getNavigationOptions(title),
+          headerTintColor: '#46819D',
+        },
+      },
+      invite: {
+        screen: Invite,
         navigationOptions: {
           ...getNavigationOptions(title),
           headerTintColor: '#46819D',

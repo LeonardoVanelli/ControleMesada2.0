@@ -16,18 +16,19 @@ import {
 } from './styles';
 
 export default function About({ navigation }) {
+  const familyId = navigation.getParam('familyId');
+
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
     async function handleAboutFamily() {
-      const familyId = navigation.getParam('familyId');
       const response = await api.get(`family/${familyId}`);
 
       setUsers(response.data.users);
     }
 
     handleAboutFamily();
-  }, [navigation]);
+  }, [familyId, navigation]);
 
   return (
     <Background>
@@ -56,7 +57,9 @@ export default function About({ navigation }) {
             </Users>
           </Session>
         </Body>
-        <Button>Convidar membro</Button>
+        <Button onPress={() => navigation.navigate('invite', { familyId })}>
+          Convidar membro
+        </Button>
       </Container>
     </Background>
   );
@@ -65,5 +68,6 @@ export default function About({ navigation }) {
 About.propTypes = {
   navigation: PropTypes.shape({
     getParam: PropTypes.func.isRequired,
+    navigate: PropTypes.func.isRequired,
   }).isRequired,
 };
