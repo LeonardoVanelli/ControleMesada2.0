@@ -2,6 +2,7 @@ import produce from 'immer';
 
 const INITIAL_STATE = {
   data: [],
+  loading: true,
 };
 
 export default function auth(state = INITIAL_STATE, action) {
@@ -21,6 +22,7 @@ export default function auth(state = INITIAL_STATE, action) {
       }
       case '@family/SET_FAMILIES_SUCCESS': {
         draft.data = action.payload.families;
+        draft.loading = false;
         break;
       }
       default:

@@ -27,13 +27,14 @@ export function* setFamilies({ payload }) {
       params: {
         userId: id,
       },
+      timeout: 10000,
     });
 
     const families = response.data;
 
     yield put(setFamiliesSuccess(families));
   } catch (error) {
-    Alert.alert('Opss!!! ', error.response.data.error);
+    Alert.alert('Opss!!! ', error.message);
   }
 }
 
