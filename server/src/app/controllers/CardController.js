@@ -1,4 +1,4 @@
-import { startOfDay, parseISO, endOfWeek } from 'date-fns';
+import { startOfDay, parseISO, endOfWeek, startOfWeek } from 'date-fns';
 import { Op, col, fn } from 'sequelize';
 
 import Activity from '../models/Activity';
@@ -7,8 +7,9 @@ import Family from '../models/Family';
 
 class CardController {
   async index(req, res) {
+    const { userId, familyId } = req.query;
+
     const date = startOfDay(parseISO(req.query.date));
-    const { userId } = req.params;
 
     const activities = await Activity.findAll({
       where: {
@@ -21,7 +22,12 @@ class CardController {
           model: Assignment,
           as: 'assignment',
           include: [
-            { model: Family, as: 'families', where: { id: 1 }, attributes: [] },
+            {
+              model: Family,
+              as: 'families',
+              where: { id: familyId },
+              attributes: [],
+            },
           ],
           required: true,
           attributes: ['id'],
@@ -29,57 +35,73 @@ class CardController {
       ],
     });
 
-    const idsRealizedAssignment = activities.map(
-      activity => activity.assignment.id
-    );
-
-    const realized = await Assignment.findAll({
-      where: { id: idsRealizedAssignment },
+    const assignmentsQuery = await Assignment.findAll({
       include: [
         {
           model: Family,
           as: 'families',
-          where: { id: 1 },
+          where: { id: familyId },
           attributes: [],
+          required: true,
         },
       ],
-      attributes: ['id', 'name', 'value'],
+      attributes: ['id', 'name'],
     });
 
-    const notRealized = await Assignment.findAll({
-      where: { [Op.not]: { id: idsRealizedAssignment } },
-      include: [
-        {
-          model: Family,
-          as: 'families',
-          where: { id: 1 },
-          attributes: [],
-        },
-      ],
-      attributes: ['id', 'name', 'value'],
+    const assignments = assignmentsQuery.map(assignment => {
+      return {
+        id: assignment.id,
+        name: assignment.name,
+        realized: !!activities.find(
+          activity => activity.assignment.id === assignment.id
+        ),
+      };
     });
 
-    const [amountWeek] = await Activity.findAll({
+    const queryAmounts = await Activity.findAll({
       where: {
+        user_id: userId,
         realized_date: {
           [Op.between]: [
-            startOfDay(date, { weekStartsOn: 1 }),
+            startOfWeek(date, { weekStartsOn: 1 }),
             endOfWeek(date, { weekStartsOn: 1 }),
           ],
         },
       },
       attributes: [[fn('sum', col('assignment.value')), 'amount']],
       raw: true,
+      group: [
+        'assignment.id',
+        'assignment.families.family_assignments.created_at',
+        'assignment.families.family_assignments.updated_at',
+        'assignment.families.family_assignments.family_id',
+        'assignment.families.family_assignments.assignment_id',
+      ],
       include: [
         {
           model: Assignment,
           as: 'assignment',
-          attributes: [],
+          attributes: ['id'],
+          include: [
+            {
+              model: Family,
+              as: 'families',
+              where: { id: familyId },
+              attributes: [],
+            },
+          ],
         },
       ],
     });
 
-    res.json({ realized, notRealized, amountWeek: amountWeek.amount });
+    let amountWeek = 0;
+    if (queryAmounts) {
+      amountWeek = queryAmounts.reduce(
+        (accumulator, query) => accumulator + query.amount,
+        0
+      );
+    }
+    res.json({ assignments, amountWeek });
   }
 }
 

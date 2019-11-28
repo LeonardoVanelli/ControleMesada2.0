@@ -44,7 +44,7 @@ router.post('/family', ValidateFamilyStore, FamilyController.store);
 router.get('/family/:id', FamilyController.index);
 router.get('/family', ValidateFamilyShow, FamilyController.show);
 
-router.get('/card/:userId', ValidateCardIndex, CardController.index);
+router.get('/card', ValidateCardIndex, CardController.index);
 
 router.use(providerMiddleware);
 

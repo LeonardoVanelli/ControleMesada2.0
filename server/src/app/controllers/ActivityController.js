@@ -8,6 +8,7 @@ import {
 } from 'date-fns';
 
 import Activity from '../models/Activity';
+import Assignment from '../models/Assignment';
 
 import ActivityIndexService from '../services/ActivityIndexService';
 
@@ -29,19 +30,27 @@ class ActivityController {
       where: { user_id, assignment_id, realized_date: realized_date.toJSON() },
     });
 
-    if (existentActivity) {
-      return res
-        .status(400)
-        .json({ error: 'Activity is already registered on this day' });
+    const assignment = await Assignment.findByPk(assignment_id, {
+      attributes: ['id', 'name', 'value'],
+    });
+
+    if (!assignment) {
+      return res.status(400).json({ error: 'Assignment not found' });
     }
 
-    const { id, realized_date: realizedDate } = await Activity.create({
+    if (existentActivity) {
+      existentActivity.destroy();
+
+      return res.json({ created: false, assignment });
+    }
+
+    await Activity.create({
       user_id,
       assignment_id,
       realized_date: realized_date.toJSON(),
     });
 
-    return res.json({ id, realizedDate });
+    return res.json({ created: true, assignment });
   }
 
   async index(req, res) {
