@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 
 import api from '../../../services/api';
 
-import { createSuccess, setFamiliesSuccess } from './actions';
+import { createSuccess, createFailure, setFamiliesSuccess } from './actions';
 
 export function* createFamily({ payload }) {
   try {
@@ -16,6 +16,7 @@ export function* createFamily({ payload }) {
 
     yield put(createSuccess(id, name));
   } catch (error) {
+    yield put(createFailure());
     Alert.alert('Opss!!! ', error.response.data.error);
   }
 }

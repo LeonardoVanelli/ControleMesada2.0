@@ -12,6 +12,12 @@ export function createSuccess(id, name) {
   };
 }
 
+export function createFailure() {
+  return {
+    type: '@family/CREATE_FAILURE',
+  };
+}
+
 export function setFamiliesSuccess(families) {
   return {
     type: '@family/SET_FAMILIES_SUCCESS',

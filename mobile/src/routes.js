@@ -7,7 +7,7 @@ import Loading from './components/Loading';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 
-export default (isSigned = false, families) => {
+export default (isSigned = false, families, loading = false) => {
   return createAppContainer(
     createSwitchNavigator(
       {
@@ -17,10 +17,10 @@ export default (isSigned = false, families) => {
         }),
         App: createSwitchNavigator(
           {
-            Drawer: Drawer(families.data),
+            Drawer: Drawer(families),
             Loading,
           },
-          { initialRouteName: families.loading ? 'Loading' : 'Drawer' }
+          { initialRouteName: loading ? 'Loading' : 'Drawer' }
         ),
       },
       {

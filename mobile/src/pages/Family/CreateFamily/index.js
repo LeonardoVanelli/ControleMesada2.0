@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import HamburguerMenu from '../../../components/Drawer/HamburguerMenu';
 import Background from '../../../components/Background';
@@ -12,12 +12,14 @@ import { Container } from './styles';
 
 export default function Family() {
   const dispatch = useDispatch();
+  const loading = useSelector(state => state.families.loadingCreate);
 
   const [name, setName] = useState('');
 
   function handleSubmit() {
     dispatch(createRequest(name));
   }
+
   return (
     <Background>
       <Container>
@@ -29,7 +31,9 @@ export default function Family() {
           value={name}
           onChangeText={setName}
         />
-        <Button onPress={handleSubmit}>Criar</Button>
+        <Button loading={loading} onPress={handleSubmit}>
+          Criar
+        </Button>
       </Container>
     </Background>
   );

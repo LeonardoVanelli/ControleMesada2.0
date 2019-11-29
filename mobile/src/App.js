@@ -7,8 +7,9 @@ import createRoutes from './routes';
 
 export default function App() {
   const signed = useSelector(state => state.auth.signed);
-  const families = useSelector(state => state.families);
+  const families = useSelector(state => state.families.data);
+  const loading = useSelector(state => state.families.loading);
 
-  const Routes = createRoutes(signed, families);
+  const Routes = createRoutes(signed, families, loading);
   return <Routes />;
 }

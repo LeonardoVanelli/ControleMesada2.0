@@ -3,6 +3,7 @@ import produce from 'immer';
 const INITIAL_STATE = {
   data: [],
   loading: false,
+  loadingCreate: false,
 };
 
 export default function auth(state = INITIAL_STATE, action) {
@@ -16,8 +17,17 @@ export default function auth(state = INITIAL_STATE, action) {
         draft.data = [];
         break;
       }
+      case '@family/CREATE_REQUEST': {
+        draft.loadingCreate = true;
+        break;
+      }
       case '@family/CREATE_SUCCESS': {
         draft.data.push(action.payload);
+        draft.loadingCreate = false;
+        break;
+      }
+      case '@family/CREATE_FAILURE': {
+        draft.loadingCreate = false;
         break;
       }
       case '@family/SET_FAMILIES_SUCCESS': {
