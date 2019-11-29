@@ -22,6 +22,9 @@ export function* createFamily({ payload }) {
 
 export function* setFamilies({ payload }) {
   try {
+    if (!payload.user.profile) {
+      return;
+    }
     const { id } = payload.user.profile;
     const response = yield call(api.get, `family`, {
       params: {
