@@ -2,14 +2,21 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   flex: 1;
-  margin-bottom: 18px;
   justify-content: space-between;
 `;
 
-export const Body = styled.View``;
+export const LoadingIndicator = styled.View`
+  flex: 1;
+  justify-content: center;
+`;
+
+export const Body = styled.View`
+  flex: 1;
+`;
 
 export const Assignments = styled.ScrollView.attrs({
-  contentContainerStyle: { padding: 18, paddingTop: 38 },
+  contentContainerStyle: { padding: 18, paddingBottom: 18 },
+  overScrollMode: 'never',
 })``;
 
 export const Item = styled.View`
@@ -20,6 +27,8 @@ export const ItemName = styled.Text`
   font-family: Roboto;
   font-size: 16px;
   line-height: 19px;
+  flex: 1;
+  padding-right: 12px;
 
   color: ${props =>
     props.disabled
@@ -57,11 +66,12 @@ export const Line = styled.View`
 
 export const Footer = styled.View`
   padding: 0 18px;
+  margin: 18px 0;
 `;
 
 export const NotAssignments = styled.View`
   flex: 1;
-  justify-content: flex-end;
+  justify-content: center;
 `;
 
 export const NotAssignmentsText = styled.Text`

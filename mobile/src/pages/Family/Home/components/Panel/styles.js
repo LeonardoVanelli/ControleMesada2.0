@@ -50,6 +50,7 @@ export const Body = styled.View`
 export const Assignments = styled.ScrollView.attrs({
   contentContainerStyle: { paddingBottom: 8, paddingTop: 8 },
   showsVerticalScrollIndicator: false,
+  overScrollMode: 'never',
 })`
   padding: 0 8px;
   padding-bottom: 13px;
