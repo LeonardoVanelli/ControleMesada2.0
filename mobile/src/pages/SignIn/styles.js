@@ -1,12 +1,6 @@
-import { Platform } from 'react-native';
 import styled from 'styled-components/native';
 
-export const Container = styled.KeyboardAvoidingView.attrs({
-  enabled: Platform.OS === 'ios',
-  behavior: 'padding',
-})`
-  display: flex;
-`;
+export const Container = styled.ScrollView``;
 
 export const Logo = styled.Text`
   align-self: center;

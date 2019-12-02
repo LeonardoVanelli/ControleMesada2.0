@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 import CheckBoxComp from '../../components/CheckBox';
 
-export const Container = styled.View``;
+export const Container = styled.ScrollView``;
 
 export const Logo = styled.Text`
   align-self: center;
