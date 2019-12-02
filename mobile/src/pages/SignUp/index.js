@@ -1,12 +1,15 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Alert } from 'react-native';
 
 import Background from '../../components/Background';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
 import { signUpRequest } from '../../store/modules/auth/actions';
+
+import * as navigationActions from '../../services/navigation';
 
 import {
   Container,
@@ -22,6 +25,7 @@ export default function SignUp({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const loading = useSelector(state => state.auth.loading);
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -29,11 +33,16 @@ export default function SignUp({ navigation }) {
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    navigationActions.setNavigator(navigation);
+  }, [navigation]);
+
   function handleSubmit() {
     const equalPassword = password === confirmPassword;
-    if (equalPassword) {
-      dispatch(signUpRequest(name, email, password));
+    if (!equalPassword) {
+      return Alert.alert('Opss!', 'Login e senha não são iguais');
     }
+    return dispatch(signUpRequest(name, email, password));
   }
 
   return (
@@ -83,7 +92,9 @@ export default function SignUp({ navigation }) {
             onSubmitEditing={handleSubmit}
           />
 
-          <Button onPress={handleSubmit}>Criar conta</Button>
+          <Button loading={loading} onPress={handleSubmit}>
+            Criar conta
+          </Button>
         </Form>
         <ExistentAccount onPress={() => navigation.navigate('SignIn')}>
           <Text>

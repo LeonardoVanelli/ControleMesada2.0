@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Background from '../../components/Background';
 import Input from '../../components/Input';
@@ -23,6 +23,7 @@ export default function SignIn({ navigation }) {
 
   const passwordRef = useRef();
 
+  const loading = useSelector(state => state.auth.loading);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -58,7 +59,7 @@ export default function SignIn({ navigation }) {
             value={password}
             onChangeText={setPassword}
           />
-          <Button onPress={handleSubmit} loading={false}>
+          <Button loading={loading} onPress={handleSubmit}>
             Entrar
           </Button>
         </Form>

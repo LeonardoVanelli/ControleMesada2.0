@@ -2,8 +2,9 @@ import { takeLatest, call, put, all } from 'redux-saga/effects';
 import { Alert } from 'react-native';
 
 import api from '../../../services/api';
+import { navigate } from '../../../services/navigation';
 
-import { signInSuccess, signFailure } from './actions';
+import { signInSuccess, signFailure, signUpSuccess } from './actions';
 
 export function* signIn({ payload }) {
   try {
@@ -34,9 +35,12 @@ export function* signUp({ payload }) {
       password,
     });
 
+    yield put(signUpSuccess());
     Alert.alert('Cadastro efetuado', 'Faça login');
+    navigate('SignIn');
   } catch (error) {
-    Alert.alert('Falha no cadastro', 'Verifique os dados informados');
+    yield put(signFailure());
+    Alert.alert('Falha no cadastro', error.response.data.error);
   }
 }
 
@@ -50,8 +54,13 @@ export function setToken({ payload }) {
   }
 }
 
+export function* onPersist() {
+  yield put(signFailure());
+}
+
 export default all([
   takeLatest('persist/REHYDRATE', setToken),
+  takeLatest('persist/REHYDRATE', onPersist),
   takeLatest('@auth/SIGN_IN_REQUEST', signIn),
   takeLatest('@auth/SIGN_UP', signUp),
 ]);

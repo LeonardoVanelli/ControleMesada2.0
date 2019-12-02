@@ -19,6 +19,14 @@ export default function auth(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case '@auth/SIGN_UP': {
+        draft.loading = true;
+        break;
+      }
+      case '@auth/SIGN_UP_SUCCESS': {
+        draft.loading = false;
+        break;
+      }
       case '@auth/SIGN_FAILURE': {
         draft.loading = false;
         break;
@@ -28,7 +36,6 @@ export default function auth(state = INITIAL_STATE, action) {
         draft.signed = false;
         break;
       }
-
       default:
     }
   });
