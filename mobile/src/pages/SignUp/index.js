@@ -18,12 +18,14 @@ import {
   ExistentAccount,
   Text,
   TextBold,
+  CheckBox,
 } from './styles';
 
 export default function SignUp({ navigation }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [provider, setProvider] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState('');
   const loading = useSelector(state => state.auth.loading);
 
@@ -42,7 +44,7 @@ export default function SignUp({ navigation }) {
     if (!equalPassword) {
       return Alert.alert('Opss!', 'Login e senha não são iguais');
     }
-    return dispatch(signUpRequest(name, email, password));
+    return dispatch(signUpRequest(name, email, password, provider));
   }
 
   return (
@@ -87,9 +89,12 @@ export default function SignUp({ navigation }) {
             secureTextEntry
             autoCorrect={false}
             autoCapitalize="none"
-            returnKeyType="send"
             ref={confirmPasswordRef}
-            onSubmitEditing={handleSubmit}
+          />
+          <CheckBox
+            rightText="Provedor"
+            checked={provider}
+            onPress={() => setProvider(!provider)}
           />
 
           <Button loading={loading} onPress={handleSubmit}>

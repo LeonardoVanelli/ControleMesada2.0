@@ -4,9 +4,14 @@ import PropTypes from 'prop-types';
 
 import { Container, RightText } from './styles';
 
-export default function CheckBox({ checked = false, rightText, onPress }) {
+export default function CheckBox({
+  checked = false,
+  rightText,
+  onPress,
+  ...rest
+}) {
   return (
-    <Container onPress={onPress}>
+    <Container {...rest} onPress={onPress}>
       {checked ? (
         <Icon name="check-square" size={24} color="rgba(255, 255, 255, 0.4)" />
       ) : (

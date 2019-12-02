@@ -1,16 +1,17 @@
 import styled from 'styled-components/native';
 
+import CheckBoxComp from '../../components/CheckBox';
+
 export const Container = styled.View``;
 
 export const Logo = styled.Text`
   align-self: center;
-  margin: 30px 0;
+  margin-top: 30px;
   width: 227px;
-  height: 168px;
 
   font-family: RibeyeMarrow-Regular;
   font-size: 41px;
-  line-height: 56px;
+  line-height: 43px;
   text-align: center;
 
   color: #46819d;
@@ -34,4 +35,8 @@ export const Text = styled.Text`
 export const TextBold = styled.Text`
   font-weight: bold;
   text-decoration-line: underline;
+`;
+
+export const CheckBox = styled(CheckBoxComp)`
+  padding-bottom: 20px;
 `;
