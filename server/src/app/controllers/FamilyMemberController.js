@@ -5,7 +5,8 @@ import Family from '../models/Family';
 
 class FamilyMember {
   async store(req, res) {
-    const { key, userId } = req.body;
+    const { key } = req.body;
+    const { userId } = req;
 
     const invite = await Invite.verify(key);
 
@@ -39,7 +40,9 @@ class FamilyMember {
 
     await Invite.del(key);
 
-    return res.json({ invite });
+    const { id, name } = family;
+
+    return res.json({ id, name });
   }
 }
 

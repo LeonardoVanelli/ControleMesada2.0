@@ -46,16 +46,16 @@ router.get('/family', ValidateFamilyShow, FamilyController.show);
 
 router.get('/card', ValidateCardIndex, CardController.index);
 
-router.use(providerMiddleware);
-
-router.post('/assignment', ValidateAssignmentStore, AssignmentController.store);
-
-router.post('/invite', ValidateInviteStore, InviteController.store);
-
 router.post(
   '/familymember',
   ValidateFamilyMemberStore,
   FamilyMemberController.store
 );
+
+router.use(providerMiddleware);
+
+router.post('/assignment', ValidateAssignmentStore, AssignmentController.store);
+
+router.post('/invite', ValidateInviteStore, InviteController.store);
 
 export default router;
