@@ -12,10 +12,3 @@ export const Assignments = styled.View`
 `;
 
 export const Footer = styled.View``;
-
-export const Cards = styled.ScrollView.attrs({
-  horizontal: true,
-  showsHorizontalScrollIndicator: false,
-  contentContainerStyle: { paddingRight: 18, paddingLeft: 9 },
-  overScrollMode: 'never',
-})``;
