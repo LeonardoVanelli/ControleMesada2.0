@@ -3,7 +3,13 @@ import { Alert } from 'react-native';
 
 import api from '../../../services/api';
 
-import { createSuccess, createFailure, setFamiliesSuccess } from './actions';
+import {
+  createSuccess,
+  createFailure,
+  setFamiliesSuccess,
+  joinFailure,
+  joinFamilySuccess,
+} from './actions';
 
 export function* createFamily({ payload }) {
   try {
@@ -17,6 +23,22 @@ export function* createFamily({ payload }) {
     yield put(createSuccess(id, name));
   } catch (error) {
     yield put(createFailure());
+    Alert.alert('Opss!!! ', error.response.data.error);
+  }
+}
+
+export function* joinFamily({ payload }) {
+  try {
+    const { key } = payload;
+
+    const response = yield call(api.post, 'familymember', {
+      key,
+    });
+
+    const family = response.data;
+    yield put(joinFamilySuccess(family));
+  } catch (error) {
+    yield put(joinFailure());
     Alert.alert('Opss!!! ', error.response.data.error);
   }
 }
@@ -43,6 +65,7 @@ export function* setFamilies({ payload }) {
 }
 
 export default all([
+  takeLatest('@family/JOIN_FAMILY_REQUEST', joinFamily),
   takeLatest('persist/REHYDRATE', setFamilies),
   takeLatest('@family/CREATE_REQUEST', createFamily),
 ]);

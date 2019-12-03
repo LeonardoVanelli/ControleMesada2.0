@@ -24,3 +24,23 @@ export function setFamiliesSuccess(families) {
     payload: { families },
   };
 }
+
+export function joinFamilyRequest(key) {
+  return {
+    type: '@family/JOIN_FAMILY_REQUEST',
+    payload: { key },
+  };
+}
+
+export function joinFamilySuccess(family) {
+  return {
+    type: '@family/JOIN_FAMILY_SUCCESS',
+    payload: { family },
+  };
+}
+
+export function joinFailure() {
+  return {
+    type: '@family/JOIN_FAILURE',
+  };
+}

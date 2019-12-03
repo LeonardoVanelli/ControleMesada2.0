@@ -5,6 +5,7 @@ import Drawer from './components/Drawer';
 
 import Family from './pages/Family/Home';
 import CreateFamily from './pages/Family/CreateFamily';
+import JoinFamily from './pages/Family/Join';
 import AboutFamily from './pages/Family/About';
 import Invite from './pages/Family/About/Invite';
 import Assignment from './pages/Family/Assignment';
@@ -80,6 +81,11 @@ export default families => {
   familiesComponents['Criar Familia'] = createStack(
     CreateFamily,
     'Criar família'
+  );
+
+  familiesComponents['Entrar em familia existente'] = createStack(
+    JoinFamily,
+    'Entrar na família'
   );
 
   return createDrawerNavigator(familiesComponents, {
