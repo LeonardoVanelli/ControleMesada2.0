@@ -38,3 +38,8 @@ export const UserName = styled.Text`
 
   color: rgba(255, 255, 255, 0.54);
 `;
+
+export const LoadingIndicator = styled.View`
+  flex: 1;
+  justify-content: center;
+`;

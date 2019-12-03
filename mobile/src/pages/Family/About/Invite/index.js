@@ -26,7 +26,7 @@ export default function Invite({ navigation }) {
       setEmail('');
       Keyboard.dismiss();
     } catch (error) {
-      Alert.alert('Opss!', error.response.data.messages[0].message);
+      Alert.alert('Opss!', error.response.data.error);
     }
   }
 
