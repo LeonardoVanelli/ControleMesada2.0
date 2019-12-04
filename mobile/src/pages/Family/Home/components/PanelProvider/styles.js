@@ -15,19 +15,45 @@ export const Header = styled.View`
   border-bottom-width: 1px;
 `;
 
-export const DateText = styled.Text`
+export const Title = styled.Text`
   font-family: Roboto;
   margin-bottom: 6px;
   font-size: 16px;
   line-height: 19px;
+  text-align: center;
 
   color: rgba(255, 255, 255, 0.85);
+`;
+
+export const Body = styled.View`
+  flex: 1;
+`;
+
+export const LoadingIndicator = styled.View``;
+
+export const Activities = styled.ScrollView.attrs({
+  contentContainerStyle: { padding: 18, paddingBottom: 13 },
+  showsVerticalScrollIndicator: false,
+  overScrollMode: 'never',
+})``;
+
+export const NotAssignments = styled.View``;
+
+export const NotAssignmentsText = styled.Text`
+  text-align: center;
+  font-family: Roboto;
+  font-size: 14px;
+  line-height: 14px;
+  align-items: center;
+
+  color: #379bd1;
 `;
 
 export const Footer = styled.View`
   background: rgba(255, 255, 255, 0.12);
   padding: 18px 0;
 `;
+
 export const ComplementAmountText = styled.Text`
   text-align: center;
 
@@ -38,35 +64,7 @@ export const ComplementAmountText = styled.Text`
 
   color: #89cff5;
 `;
+
 export const Amount = styled.Text`
   font-weight: bold;
-`;
-
-export const Body = styled.View`
-  flex: 1;
-  justify-content: center;
-`;
-
-export const Assignments = styled.ScrollView.attrs({
-  contentContainerStyle: { paddingBottom: 8, paddingTop: 8 },
-  showsVerticalScrollIndicator: false,
-  overScrollMode: 'never',
-})`
-  padding: 0 8px;
-  padding-bottom: 13px;
-`;
-
-export const LoadingIndicator = styled.View``;
-
-export const NotAssignments = styled.View``;
-
-export const NotAssignmentsText = styled.Text`
-  text-align: center;
-
-  font-family: Roboto;
-  font-size: 14px;
-  line-height: 14px;
-  align-items: center;
-
-  color: #379bd1;
 `;
