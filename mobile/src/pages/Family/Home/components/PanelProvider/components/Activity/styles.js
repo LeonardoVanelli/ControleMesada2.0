@@ -42,6 +42,14 @@ export const Text = styled.Text`
 export const AssignmentName = styled.Text`
   font-family: Roboto;
   font-size: 15px;
+  flex: 1;
+
+  color: rgba(255, 255, 255, 0.74);
+`;
+
+export const DayRealized = styled.Text`
+  font-family: Roboto;
+  font-size: 15px;
 
   color: rgba(255, 255, 255, 0.74);
 `;

@@ -1,4 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import PropTypes from 'prop-types';
+import {
+  formatDistance,
+  parseISO,
+  format,
+  startOfWeek,
+  isAfter,
+} from 'date-fns';
+import pt from 'date-fns/locale/pt';
 
 import {
   Container,
@@ -6,21 +15,45 @@ import {
   UserName,
   Time,
   Body,
-  Text,
+  DayRealized,
   AssignmentName,
 } from './styles';
 
-export default function Activity() {
+export default function Activity({
+  userName,
+  createdAt,
+  assignmentName,
+  realizedAt,
+}) {
+  const realizedAtFormated = useMemo(() => {
+    const formated = isAfter(parseISO(realizedAt), startOfWeek(new Date()))
+      ? 'cccc'
+      : `dd 'de' MMM`;
+    return format(parseISO(realizedAt), formated, { locale: pt });
+  }, [realizedAt]);
+
   return (
     <Container>
       <Header>
-        <UserName>Gustavo Santos</UserName>
-        <Time>Há 20 minutos</Time>
+        <UserName>{userName}</UserName>
+        <Time>
+          {formatDistance(parseISO(createdAt), new Date(), {
+            addSuffix: true,
+            locale: pt,
+          })}
+        </Time>
       </Header>
       <Body>
-        <Text>Reaizou a tarefa: </Text>
-        <AssignmentName>Secar a louça</AssignmentName>
+        <AssignmentName>{assignmentName}</AssignmentName>
+        <DayRealized>{realizedAtFormated}</DayRealized>
       </Body>
     </Container>
   );
 }
+
+Activity.propTypes = {
+  userName: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  assignmentName: PropTypes.string.isRequired,
+  realizedAt: PropTypes.string.isRequired,
+};
