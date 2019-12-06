@@ -4,7 +4,7 @@ import { Op } from 'sequelize';
 import Activity from '../models/Activity';
 import Assignment from '../models/Assignment';
 
-class ActivityIndexService {
+class ActivityShowService {
   async run({ userId, date }) {
     const where = { user_id: userId };
     if (date) {
@@ -35,4 +35,4 @@ class ActivityIndexService {
   }
 }
 
-export default new ActivityIndexService();
+export default new ActivityShowService();

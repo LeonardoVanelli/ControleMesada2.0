@@ -54,6 +54,8 @@ router.post(
 
 router.use(providerMiddleware);
 
+router.get('/activity', ActivityController.show);
+
 router.post('/assignment', ValidateAssignmentStore, AssignmentController.store);
 
 router.post('/invite', ValidateInviteStore, InviteController.store);
