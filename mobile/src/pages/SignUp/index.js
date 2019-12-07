@@ -96,7 +96,6 @@ export default function SignUp({ navigation }) {
             checked={provider}
             onPress={() => setProvider(!provider)}
           />
-
           <Button loading={loading} onPress={handleSubmit}>
             Criar conta
           </Button>

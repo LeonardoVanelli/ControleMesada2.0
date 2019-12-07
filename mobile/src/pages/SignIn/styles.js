@@ -1,12 +1,15 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.ScrollView``;
+export const Container = styled.View`
+  flex: 1;
+  justify-content: space-between;
+`;
 
 export const Logo = styled.Text`
   align-self: center;
   margin: 30px 0;
+  height: 30%;
   width: 227px;
-  height: 168px;
 
   font-family: RibeyeMarrow-Regular;
   font-size: 41px;
@@ -18,6 +21,10 @@ export const Logo = styled.Text`
 
 export const Form = styled.View`
   margin: 0 20px;
+`;
+
+export const Footer = styled.View`
+  margin-bottom: 100px;
 `;
 
 export const RememberPass = styled.TouchableOpacity`

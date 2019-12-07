@@ -13,6 +13,7 @@ import {
   Logo,
   Form,
   Text,
+  Footer,
   RememberPass,
   NewAccount,
   TextBold,
@@ -63,19 +64,21 @@ export default function SignIn({ navigation }) {
             Entrar
           </Button>
         </Form>
-        <RememberPass>
-          <Text>
-            Esqueceu sua senha?
-            <TextBold> Clique aqui</TextBold>
-          </Text>
-        </RememberPass>
+        <Footer>
+          <RememberPass>
+            <Text>
+              Esqueceu sua senha?
+              <TextBold> Clique aqui</TextBold>
+            </Text>
+          </RememberPass>
 
-        <NewAccount onPress={() => navigation.navigate('SignUp')}>
-          <Text>
-            Não tem conta?
-            <TextBold> Cadastre-se</TextBold>
-          </Text>
-        </NewAccount>
+          <NewAccount onPress={() => navigation.navigate('SignUp')}>
+            <Text>
+              Não tem conta?
+              <TextBold> Cadastre-se</TextBold>
+            </Text>
+          </NewAccount>
+        </Footer>
       </Container>
     </Background>
   );
