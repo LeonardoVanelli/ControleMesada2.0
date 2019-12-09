@@ -14,11 +14,6 @@ export const Body = styled.View`
   flex: 1;
 `;
 
-export const Assignments = styled.ScrollView.attrs({
-  contentContainerStyle: { padding: 18, paddingBottom: 18 },
-  overScrollMode: 'never',
-})``;
-
 export const Item = styled.View`
   padding: 9px 0;
 `;

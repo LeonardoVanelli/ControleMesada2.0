@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import currencyFormatter from 'currency-formatter';
 import { useSelector } from 'react-redux';
-import { Alert, ActivityIndicator } from 'react-native';
+import { Alert, ActivityIndicator, FlatList } from 'react-native';
 
 import api from '../../../services/api';
 
@@ -13,7 +13,6 @@ import {
   Container,
   LoadingIndicator,
   Body,
-  Assignments,
   Item,
   ItemName,
   Value,
@@ -31,35 +30,44 @@ export default function Assignment({ navigation }) {
 
   const [assignments, setAssignments] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const getAssignments = useCallback(async () => {
+    try {
+      const response = await api.get('assignment', {
+        params: {
+          familyId,
+        },
+      });
+
+      const assignmentsComplete = response.data.map(assignment => ({
+        ...assignment,
+        formattedValue: currencyFormatter.format(assignment.value, {
+          code: 'BRL',
+        }),
+      }));
+
+      setAssignments(assignmentsComplete);
+    } catch (error) {
+      Alert.alert('Opss!', error.response.data);
+      setLoading(false);
+    }
+  }, [familyId]);
 
   useEffect(() => {
-    async function handleStart() {
-      try {
-        const response = await api.get('assignment', {
-          params: {
-            familyId,
-          },
-        });
-
-        const assignmentsComplete = response.data.map(assignment => ({
-          ...assignment,
-          formattedValue: currencyFormatter.format(assignment.value, {
-            code: 'BRL',
-          }),
-        }));
-
-        setAssignments(assignmentsComplete);
-        setLoading(false);
-      } catch (error) {
-        Alert.alert('Opss!', error.response.data);
-        setLoading(false);
-      }
-    }
     setLoading(true);
-    navigation.addListener('didFocus', () => {
-      handleStart();
+
+    navigation.addListener('didFocus', async () => {
+      await getAssignments();
+      setLoading(false);
     });
-  }, [familyId, navigation]);
+  }, [getAssignments, navigation]);
+
+  async function onRefreshing() {
+    setRefreshing(true);
+    await getAssignments();
+    setRefreshing(false);
+  }
 
   return (
     <Background>
@@ -77,21 +85,25 @@ export default function Assignment({ navigation }) {
           </NotAssignments>
         ) : (
           <Body>
-            <Assignments>
-              {assignments.map(assignment => (
-                <Item key={assignment.id}>
+            <FlatList
+              contentContainerStyle={{ padding: 18, paddingBottom: 18 }}
+              overScrollMode="never"
+              data={assignments}
+              keyExtractor={assignment => String(assignment.id)}
+              onRefresh={() => onRefreshing()}
+              refreshing={refreshing}
+              renderItem={({ item }) => (
+                <Item>
                   <DataItem>
-                    <ItemName disabled={assignment.disabled}>
-                      {assignment.name}
-                    </ItemName>
-                    <Value disabled={assignment.disabled}>
-                      {assignment.formattedValue}
+                    <ItemName disabled={item.disabled}>{item.name}</ItemName>
+                    <Value disabled={item.disabled}>
+                      {item.formattedValue}
                     </Value>
                   </DataItem>
-                  <Line disabled={assignment.disabled} />
+                  <Line disabled={item.disabled} />
                 </Item>
-              ))}
-            </Assignments>
+              )}
+            />
           </Body>
         )}
         {isProvider && (
