@@ -15,13 +15,14 @@ export const Header = styled.View`
   border-bottom-width: 1px;
 `;
 
-export const DateText = styled.Text`
+export const DropDown = styled.Picker`
+  height: 50px;
   font-family: Roboto;
   margin-bottom: 6px;
   font-size: 16px;
   line-height: 19px;
 
-  color: rgba(255, 255, 255, 0.85);
+  color: 'rgba(255, 255, 255, 0.85)';
 `;
 
 export const Footer = styled.View`

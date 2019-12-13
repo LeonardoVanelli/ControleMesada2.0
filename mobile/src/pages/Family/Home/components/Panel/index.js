@@ -3,16 +3,17 @@ import { ActivityIndicator } from 'react-native';
 import { useSelector } from 'react-redux';
 import currencyFormatter from 'currency-formatter';
 import PropTypes from 'prop-types';
-import { format } from 'date-fns';
+import { format, startOfWeek, eachDayOfInterval } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
 import api from '../../../../../services/api';
 
 import CheckBox from '../../../../../components/CheckBox';
+
 import {
   Container,
   Header,
-  DateText,
+  DropDown,
   Footer,
   ComplementAmountText,
   Amount,
@@ -26,12 +27,13 @@ import {
 export default function Panel({ familyId }) {
   const [assignments, setAssignments] = useState([]);
   const [amountWeek, setAmountWeek] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [date, setDate] = useState(new Date());
+  const [loading, setLoading] = useState(false);
   const userId = useSelector(state => state.user.profile.id);
 
   async function handleCreateActivity(assignmentId) {
     const response = await api.post('activity', {
-      realized_date: new Date(),
+      realized_date: date,
       assignment_id: assignmentId,
       user_id: userId,
     });
@@ -57,11 +59,24 @@ export default function Panel({ familyId }) {
     [amountWeek]
   );
 
+  const dates = useMemo(() => {
+    const daysWeek = eachDayOfInterval({
+      start: startOfWeek(new Date(), { weekStartsOn: 1 }),
+      end: new Date(),
+    });
+
+    return daysWeek.reverse().map(day => ({
+      value: day,
+      label: format(day, `dd 'de' MMMM (EEEE)`, { locale: pt }),
+    }));
+  }, []);
+
   useEffect(() => {
     async function handleStart() {
+      setLoading(true);
       const response = await api.get('card', {
         params: {
-          date: new Date(),
+          date,
           familyId,
           userId,
         },
@@ -73,14 +88,23 @@ export default function Panel({ familyId }) {
     }
 
     handleStart();
-  }, [familyId, userId]);
+  }, [date, familyId, userId]);
 
   return (
     <Container>
       <Header>
-        <DateText>
-          {format(new Date(), `dd 'de' MMMM (EEEE)`, { locale: pt })}
-        </DateText>
+        <DropDown
+          onValueChange={changedValue => setDate(changedValue)}
+          selectedValue={date}
+        >
+          {dates.map(item => (
+            <DropDown.Item
+              key={item.value}
+              label={item.label}
+              value={item.value}
+            />
+          ))}
+        </DropDown>
       </Header>
       <Body>
         {/* eslint-disable-next-line no-nested-ternary */}
