@@ -22,7 +22,9 @@ export default function Cards({ familyId, navigation }) {
       <Card
         text="Atividades semana"
         iconName="description"
-        onPress={() => {}}
+        onPress={() => {
+          navigation.navigate('closureFilter', { familyId });
+        }}
       />
       <Card text="Perfil" iconName="person-outline" onPress={() => {}} />
     </Container>
