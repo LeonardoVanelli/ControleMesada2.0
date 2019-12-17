@@ -29,9 +29,13 @@ export default function ClosureFilter({ navigation }) {
 
   function handleSubmit() {
     if (!user && !currentUser.provider)
-      return console.tron.log(currentUser, date, familyId);
+      return navigation.navigate('closure', {
+        user: currentUser,
+        date,
+        familyId,
+      });
     if (!user) return Alert.alert('Opss!', 'Selecione um usuário');
-    return console.tron.log(user, date, familyId);
+    return navigation.navigate('closure', { user, date, familyId });
   }
 
   return (
@@ -51,11 +55,7 @@ export default function ClosureFilter({ navigation }) {
                 selectedValue={user}
               >
                 {users.map(item => (
-                  <DropDown.Item
-                    key={item.id}
-                    label={item.name}
-                    value={item.id}
-                  />
+                  <DropDown.Item key={item.id} label={item.name} value={item} />
                 ))}
               </DropDown>
             </DropContainer>

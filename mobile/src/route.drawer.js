@@ -11,6 +11,7 @@ import Invite from './pages/Family/About/Invite';
 import Assignment from './pages/Family/Assignment';
 import CreateAssignment from './pages/Family/Assignment/Create';
 import ClosureFilter from './pages/Family/ClosureFilter';
+import Closure from './pages/Family/Closure';
 
 function getNavigationOptions(title) {
   return {
@@ -65,6 +66,13 @@ function createStack(screen, title, params) {
       },
       closureFilter: {
         screen: ClosureFilter,
+        navigationOptions: {
+          ...getNavigationOptions(title),
+          headerTintColor: '#46819D',
+        },
+      },
+      closure: {
+        screen: Closure,
         navigationOptions: {
           ...getNavigationOptions(title),
           headerTintColor: '#46819D',
