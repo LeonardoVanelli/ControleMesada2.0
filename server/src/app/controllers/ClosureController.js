@@ -9,8 +9,7 @@ import Family from '../models/Family';
 
 class ClosureController {
   async index(req, res) {
-    const { userId } = req.params;
-    const { familyId } = req.query;
+    const { familyId, userId } = req.query;
     const date = parseISO(req.query.date);
 
     const user = await User.findOne({

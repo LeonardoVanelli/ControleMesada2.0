@@ -38,7 +38,7 @@ router.get('/activity/:userId', ActivityController.index);
 
 router.get('/user/:id', UserController.index);
 
-router.get('/closure/:userId', ValidateClosureIndex, ClosureController.index);
+router.get('/closure', ValidateClosureIndex, ClosureController.index);
 
 router.post('/family', ValidateFamilyStore, FamilyController.store);
 router.get('/family/:id', FamilyController.index);
